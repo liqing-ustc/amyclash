@@ -28,7 +28,9 @@ Prereqs:
 
 - [`opencli`](https://github.com/jackwener/opencli) installed and bound to a Chrome session logged into amytele.co
 - [`uv`](https://docs.astral.sh/uv/) and `jq`
-- A Clash client to load the generated profile — on macOS, [ClashX.Meta](https://github.com/MetaCubeX/ClashX.Meta) (mihomo core; the default output path targets its profile directory)
+- A Clash client to load the generated profile (both use the mihomo core):
+  - macOS — [ClashX.Meta](https://github.com/MetaCubeX/ClashX.Meta) (the default output path targets its profile directory)
+  - Ubuntu/Linux — [Clash Verge Rev](https://github.com/clash-verge-rev/clash-verge-rev) (point it at the generated file with `-o`)
 
 ```sh
 make install        # install-adapter + sync + link  (or run them individually)
