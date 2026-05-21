@@ -1,0 +1,42 @@
+{
+  "args": {
+    "id": "12345"
+  },
+  "expect": {
+    "rowCount": {
+      "min": 1,
+      "max": 1
+    },
+    "columns": [
+      "id",
+      "product",
+      "status",
+      "usedGB",
+      "remainingGB",
+      "totalGB",
+      "usedPct",
+      "resetInDays",
+      "nextDue"
+    ],
+    "types": {
+      "id": "string",
+      "product": "string",
+      "status": "string",
+      "usedGB": "number",
+      "remainingGB": "number",
+      "totalGB": "number",
+      "usedPct": "number",
+      "resetInDays": "number",
+      "nextDue": "string"
+    },
+    "patterns": {
+      "id": "^\\d+$",
+      "nextDue": "^\\d{4}/\\d{2}/\\d{2}$"
+    },
+    "notEmpty": [
+      "id",
+      "usedGB",
+      "totalGB"
+    ]
+  }
+}

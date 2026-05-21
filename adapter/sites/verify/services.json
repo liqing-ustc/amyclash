@@ -1,0 +1,34 @@
+{
+  "expect": {
+    "rowCount": {
+      "min": 1
+    },
+    "columns": [
+      "index",
+      "id",
+      "product",
+      "price",
+      "billingCycle",
+      "nextDue",
+      "status"
+    ],
+    "types": {
+      "index": "number",
+      "id": "string",
+      "product": "string",
+      "price": "string",
+      "billingCycle": "string",
+      "nextDue": "string",
+      "status": "string"
+    },
+    "patterns": {
+      "id": "^\\d+$",
+      "nextDue": "^\\d{4}/\\d{2}/\\d{2}$"
+    },
+    "notEmpty": [
+      "id",
+      "product",
+      "status"
+    ]
+  }
+}

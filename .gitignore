@@ -1,0 +1,4 @@
+# Caches / OS noise (patch/.gitignore covers patch-local artifacts like .venv, output/)
+.ruff_cache/
+__pycache__/
+.DS_Store

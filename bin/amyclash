@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# amyclash — patch an AmyTelecom subscription into a Clash config and write the profile.
+#
+# Usage: amyclash [--url <URL>] [-o <path>] [amy-patch flags...]
+#   --url <URL>      Subscription URL to patch. If omitted, a fresh one is fetched
+#                    via `opencli amytele subscription`.
+#   -o, --output     Output path. Defaults to the active ClashX Meta profile
+#                    (~/.config/clash.meta/AmyTelecom_Clash.yaml).
+#   Any other flags (e.g. --mode whitelist, --tun-mode) pass through to amy-patch.
+set -euo pipefail
+
+# Resolve through symlinks (this script is symlinked onto PATH via `make link`).
+src="${BASH_SOURCE[0]}"
+while [ -L "$src" ]; do
+    dir="$(cd -P "$(dirname "$src")" && pwd)"
+    src="$(readlink "$src")"
+    [ "${src#/}" = "$src" ] && src="$dir/$src"
+done
+REPO="$(cd -P "$(dirname "$src")/.." && pwd)"
+
+url=""
+out="$HOME/.config/clash.meta/AmyTelecom_Clash.yaml"
+extra=()
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --url)      url="$2"; shift 2;;
+        --url=*)    url="${1#*=}"; shift;;
+        -o|--output)   out="$2"; shift 2;;
+        -o=*|--output=*) out="${1#*=}"; shift;;
+        *)          extra+=("$1"); shift;;
+    esac
+done
+
+if [ -z "$url" ]; then
+    url="$(opencli amytele subscription --client clash -f json | jq -r '.[0].url')"
+    if [ -z "$url" ] || [ "$url" = "null" ]; then
+        echo "amyclash: failed to obtain subscription URL from opencli" >&2
+        exit 1
+    fi
+fi
+
+cd "$REPO/patch"
+exec uv run amy-patch --url "$url" -o "$out" ${extra[@]+"${extra[@]}"}

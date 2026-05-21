@@ -1,0 +1,11 @@
+[
+  {
+    "index": 1,
+    "id": "12345",
+    "product": "# Example Plan",
+    "price": "¥0.00",
+    "billingCycle": "半年",
+    "nextDue": "2026/01/01",
+    "status": "有效的"
+  }
+]

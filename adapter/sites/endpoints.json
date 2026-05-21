@@ -1,0 +1,29 @@
+{
+  "services": {
+    "url": "https://www.amytele.co/clientarea.php?action=services",
+    "method": "GET",
+    "auth": "WHMCS session cookie (browser:true). Logged-in probe: page text contains \"退出账户\".",
+    "params": { "required": [], "optional": [] },
+    "response": "SSR HTML. Rows under #tableServicesList tbody tr; service id from a[href*=productdetails] (?id=N); tds = [statusIcon, product, price+cycle, nextDue, status, action].",
+    "verified_at": "2026-05-21",
+    "notes": "No JSON API for the client area; extract from the rendered table."
+  },
+  "detail": {
+    "url": "https://www.amytele.co/clientarea.php?action=productdetails&id=<serviceId>",
+    "method": "GET",
+    "auth": "WHMCS session cookie (browser:true).",
+    "params": { "required": ["id"], "optional": [] },
+    "response": "SSR HTML. Body text carries 已用流量/剩余流量/N日后流量重置/下次付款; '流量已用尽' banner when exhausted. The 获取订阅链接 button onclick holds Subscription/index?sid=<id>&token=<14hex>.",
+    "verified_at": "2026-05-21",
+    "notes": "sid == serviceId. token (14 hex) is the per-account subscription token — DO NOT persist it."
+  },
+  "subscription_index": {
+    "url": "https://161.129.35.81/Subscription/index?sid=<serviceId>&token=<token>",
+    "method": "GET",
+    "auth": "token in query (from the detail page).",
+    "params": { "required": ["sid", "token"], "optional": [] },
+    "response": "HTML page of per-client buttons (input[type=button]). Each button onclick=GetSubscription('/Subscription/<Client>?...','<id>'). Surge buttons use SurgeCopy(url,url_u) which opens a 托管/非托管 modal.",
+    "verified_at": "2026-05-21",
+    "notes": "CRITICAL: the raw onclick path (e.g. /Subscription/Clash?t=anytls_clash&...) returns HTTP 503 '系统内部异常' on its own. Only the server-minted WRAPPED url works: clicking the button fires a jQuery POST (delaytime≈8s server-side), then the address shows in a layui popup as '订阅地址：https://161.129.35.81/?<base64>'. That wrapped /?<base64> form is the persistent, reusable subscription URL (verified working for Clash Verge auto-update via self_proxy). Adapter drives the button + polls the popup."
+  }
+}
