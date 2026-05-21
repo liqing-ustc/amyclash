@@ -24,8 +24,11 @@ amyclash/
 
 ## Install
 
-Prereqs: [`opencli`](https://github.com/jackwener/opencli) installed and bound to a Chrome
-session logged into amytele.co, plus [`uv`](https://docs.astral.sh/uv/) and `jq`.
+Prereqs:
+
+- [`opencli`](https://github.com/jackwener/opencli) installed and bound to a Chrome session logged into amytele.co
+- [`uv`](https://docs.astral.sh/uv/) and `jq`
+- A Clash client to load the generated profile — on macOS, [ClashX.Meta](https://github.com/MetaCubeX/ClashX.Meta) (mihomo core; the default output path targets its profile directory)
 
 ```sh
 make install        # install-adapter + sync + link  (or run them individually)
