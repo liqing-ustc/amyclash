@@ -55,3 +55,7 @@ amyclash --mode whitelist --tun-mode       # other flags pass through to amy-pat
 in `patch/` and edit (the CLI falls back to the `.example.yaml` versions otherwise).
 
 See `patch/CLAUDE.md` for amy-patch internals and `adapter/sites/notes.md` for adapter notes.
+
+## Acknowledgements
+
+The `patch/` config patcher is based on [ytyt-yt/amy-patch](https://github.com/ytyt-yt/amy-patch).
